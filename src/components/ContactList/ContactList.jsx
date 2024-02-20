@@ -7,7 +7,8 @@ import {
 } from '../../redux/selectors';
 // import { selectFilter } from '../../redux/filter-selectors';
 import { useEffect } from 'react';
-import { fetchContactsOperation } from '../../redux/contacts-operations';
+import { fetchContacts } from '../../redux/contacts-operations';
+import { AppLoader } from '../Loader/Loader';
 
 export const ContactList = () => {
   const contacts = useSelector(selectFilteredContacts);
@@ -17,12 +18,12 @@ export const ContactList = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchContactsOperation());
+    dispatch(fetchContacts());
   }, [dispatch]);
 
   return (
-    <>
-      {isLoading && <p>Loading...</p>}
+    <div>
+      {isLoading && <AppLoader />}
       {error && <p>Error: {error}</p>}
       {Boolean(contacts.length) && (
         <ul>
@@ -31,6 +32,6 @@ export const ContactList = () => {
           ))}
         </ul>
       )}
-    </>
+    </div>
   );
 };
