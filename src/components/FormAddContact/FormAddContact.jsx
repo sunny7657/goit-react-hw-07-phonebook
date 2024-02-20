@@ -2,8 +2,8 @@ import { BtnStyled } from 'components/Button/Button.styled';
 import { Notify } from 'notiflix';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from '../../redux/contacts-slice';
 import { selectContacts } from '../../redux/selectors';
+import { addContactOperation } from '../../redux/contacts-operations';
 
 export const FormAddContact = () => {
   const [name, setName] = useState('');
@@ -31,7 +31,7 @@ export const FormAddContact = () => {
       return alert(`${name} is already in contacts.`);
     }
 
-    dispatch(addContact({ name, number }));
+    dispatch(addContactOperation({ name, number }));
     Notify.success('The contact was created');
 
     setName('');

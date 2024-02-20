@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { nanoid } from 'nanoid';
 
 const initialState = {
   items: [],
@@ -13,6 +12,7 @@ const contactsSlice = createSlice({
   reducers: {
     fetchContactsLoading: state => {
       state.isLoading = true;
+      state.error = null;
     },
     fetchContactsSuccess: (state, { payload }) => {
       state.isLoading = false;
@@ -22,31 +22,60 @@ const contactsSlice = createSlice({
       state.isLoading = false;
       state.error = payload;
     },
-    addContact: {
-      reducer: (state, { payload }) => {
-        state.push(payload);
-      },
-      prepare: ({ name, number }) => {
-        return {
-          payload: {
-            id: nanoid(),
-            name,
-            number,
-          },
-        };
-      },
+    addContactLoading: state => {
+      state.isLoading = true;
+      state.error = null;
     },
-    deleteContact: (state, { payload }) =>
-      state.filter(contact => contact.id !== payload),
+    addContactSuccess: (state, { payload }) => {
+      state.isLoading = false;
+      state.items.push(payload);
+    },
+    addContactError: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+    },
+    deleteContactLoading: state => {
+      state.isLoading = true;
+      state.error = null;
+    },
+    deleteContactSuccess: (state, { payload }) => {
+      state.isLoading = false;
+      state.items = state.items.filter(({ id }) => id !== payload);
+    },
+    deleteContactError: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+    },
+
+    // addNewContact: {
+    //   reducer: (state, { payload }) => {
+    //     state.push(payload);
+    //   },
+    //   prepare: ({ name, number }) => {
+    //     return {
+    //       payload: {
+    //         id: nanoid(),
+    //         name,
+    //         number,
+    //       },
+    //     };
+    //   },
+    // },
+    // deleteContact: (state, { payload }) =>
+    //   state.filter(contact => contact.id !== payload),
   },
 });
 
 export const {
-  addContact,
-  deleteContact,
   fetchContactsLoading,
   fetchContactsSuccess,
   fetchContactsError,
+  addContactLoading,
+  addContactSuccess,
+  addContactError,
+  deleteContactLoading,
+  deleteContactSuccess,
+  deleteContactError,
 } = contactsSlice.actions;
 
 export default contactsSlice.reducer;
