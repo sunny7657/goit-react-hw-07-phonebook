@@ -3,13 +3,13 @@ import { Notify } from 'notiflix';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from '../../redux/contacts-slice';
-import { selectAllContacts } from '../../redux/contacts-selectors';
+import { selectContacts } from '../../redux/selectors';
 
 export const FormAddContact = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
-  const contacts = useSelector(selectAllContacts);
+  const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
 
   const handleInputChange = evt => {

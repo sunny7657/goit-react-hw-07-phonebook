@@ -8,7 +8,7 @@ import {
 export const fetchContacts = async () => {
   const func = async dispatch => {
     try {
-      dispatch(fetchContactsLoading);
+      dispatch(fetchContactsLoading());
       const data = await contactsApi.getContacts();
       dispatch(fetchContactsSuccess(data));
     } catch (error) {
